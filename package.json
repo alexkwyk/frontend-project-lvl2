@@ -1,0 +1,22 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Compares two configuration files and shows a difference.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexkwyk/frontend-project-lvl2.git"
+  },
+  "author": "Alexey Anisimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexkwyk/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/alexkwyk/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^9.2.0"
+  }
+}
