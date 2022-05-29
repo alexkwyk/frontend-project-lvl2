@@ -1,9 +1,11 @@
 import * as fs from 'node:fs';
+import * as path from 'node:path'
+import * as process from 'node:process'
 import _ from 'lodash'
 
 const genDiff = (filepath1, filepath2) => {
-  const file1 = JSON.parse(fs.readFileSync(filepath1));
-  const file2 = JSON.parse(fs.readFileSync(filepath2));
+  const file1 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath1), 'utf-8'));
+  const file2 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath2), 'utf-8'));
 
   const mergedValues = [...Object.keys(file1), ...Object.keys(file2)];
   const uniqueValues = _.uniq(mergedValues);
