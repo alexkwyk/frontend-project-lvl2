@@ -7,10 +7,10 @@ const genDiff = (filepath1, filepath2) => {
   const file1 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath1), 'utf-8'));
   const file2 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath2), 'utf-8'));
 
-  const mergedValues = [...Object.keys(file1), ...Object.keys(file2)];
-  const uniqueValues = _.uniq(mergedValues);
+  const mergedKeys = [...Object.keys(file1), ...Object.keys(file2)];
+  const uniqueKeys = _.uniq(mergedKeys);
 
-  const result = uniqueValues.reduce((acc, key) => {
+  const result = uniqueKeys.reduce((acc, key) => {
     const [firstFileOutput, commonOutput, secondFileOutput] = acc;
     const hasKey1 = Object.hasOwn(file1, key);
     const hasKey2 = Object.hasOwn(file2, key);
@@ -19,21 +19,18 @@ const genDiff = (filepath1, filepath2) => {
     if (hasKey1 === hasKey2) {
       if (Value1 === Value2) {
         commonOutput.push(`${key}: ${Value1}`)
-        return acc;
+      } else {
+        commonOutput.push(`- ${key}: ${Value1}`);
+        commonOutput.push(`+ ${key}: ${Value2}`);
       }
-      commonOutput.push(`- ${key}: ${Value1}`);
-      commonOutput.push(`+ ${key}: ${Value2}`);
-      return acc;
-    }
-    if (hasKey1) {
+    } else if (hasKey1) {
       firstFileOutput.push(`- ${key}: ${Value1}`);
-      return acc;
-    }
-    if (hasKey2) {
+    } else if (hasKey2) {
       secondFileOutput.push(`+ ${key}: ${Value2}`);
-      return acc;
     }
-  }, [[], [], []]).flat();
+    return acc;
+  }, [[], [], []])
+  .flat();
   return `{\n  ${result.join('\n  ')} \n}`;
 };
 
