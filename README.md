@@ -4,4 +4,4 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/8cb6299162b5b04663ba/test_coverage)](https://codeclimate.com/github/alexkwyk/frontend-project-lvl2/test_coverage)
 [![Tests&Linter](https://github.com/alexkwyk/frontend-project-lvl2/actions/workflows/tests&linter.yml/badge.svg)](https://github.com/alexkwyk/frontend-project-lvl2/actions/workflows/tests&linter.yml)
 
-[![asciicast](https://asciinema.org/a/497985.svg)](https://asciinema.org/a/497985)
+[![asciicast](https://asciinema.org/a/498634.svg)](https://asciinema.org/a/498634)
