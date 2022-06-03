@@ -34,7 +34,7 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const diffTree = calcDiff(parsedFile1, parsedFile2);
   switch (format) {
     case 'stylish': return stylishFormat(diffTree);
-    default: Error(`Invalid format output: ${format}`);
+    default: return `Invalid format output: "${format}"\nAvailable output options:\n  stylish`;
   }
 }
 
