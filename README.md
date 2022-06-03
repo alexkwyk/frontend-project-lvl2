@@ -4,7 +4,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/8cb6299162b5b04663ba/test_coverage)](https://codeclimate.com/github/alexkwyk/frontend-project-lvl2/test_coverage)
 [![Tests&Linter](https://github.com/alexkwyk/frontend-project-lvl2/actions/workflows/tests&linter.yml/badge.svg)](https://github.com/alexkwyk/frontend-project-lvl2/actions/workflows/tests&linter.yml)
 
-# Example
+## Example
 
-## Stylish format:
+### Stylish format:
 [![asciicast](https://asciinema.org/a/499382.svg)](https://asciinema.org/a/499382)
