@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import stylishFormat from './formatters.js';
-import parse from './parsers.js'
+import stylishFormat from './src/formatters.js';
+import parse from './src/parsers.js'
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const parsedFile1 = parse(filepath1);
