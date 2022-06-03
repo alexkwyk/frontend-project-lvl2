@@ -10,15 +10,16 @@ const __dirname = dirname(__filename);
 
 const getFilePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
  
-test('JSON files', () => {
+test('Stylish format JSON files', () => {
   const file1 = getFilePath('file1.json');
   const file2 = getFilePath('file2.json');
   const expected = readFile(getFilePath('exceptedStylish.txt'));
   expect(genDiff(file1, file2)).toEqual(expected);
 });
 
-//test('YAML files',() => {
-  //const file1 = getFilePath('file1.yml');
-  //const file2 = getFilePath('file2.yml');
-  //expect(genDiff(file1yml, file2yml)).toEqual(expectedString);
-//});
+test('Stylish format YAML files',() => {
+  const file1 = getFilePath('file1.yml');
+  const file2 = getFilePath('file2.yml');
+  const expected = readFile(getFilePath('exceptedStylish.txt'));
+  expect(genDiff(file1, file2)).toEqual(expected);
+});
