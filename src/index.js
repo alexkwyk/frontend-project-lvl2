@@ -1,41 +1,41 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path'
-import * as process from 'node:process'
 import _ from 'lodash'
+import stylishFormat from './formatters.js';
+import parse from './parsers.js'
 
-const readFile = (file) => fs.readFileSync(file, 'utf-8');
+const genDiff = (filepath1, filepath2, format = 'stylish') => {
+  const parsedFile1 = parse(filepath1);
+  const parsedFile2 = parse(filepath2);
 
-const getPath = (filepath) => path.resolve(process.cwd(), filepath);
-
-const genDiff = (filepath1, filepath2) => {
-  const file1 = JSON.parse(readFile(getPath(filepath1)));
-  const file2 = JSON.parse(readFile(getPath(filepath2)));
-
-  const mergedKeys = [...Object.keys(file1), ...Object.keys(file2)];
-  const uniqueKeys = _.uniq(mergedKeys);
-
-  const result = uniqueKeys.reduce((acc, key) => {
-    const [firstFileOutput, commonOutput, secondFileOutput] = acc;
-    const hasKey1 = Object.hasOwn(file1, key);
-    const hasKey2 = Object.hasOwn(file2, key);
-    const Value1 = file1?.[key];
-    const Value2 = file2?.[key];
-    if (hasKey1 === hasKey2) {
-      if (Value1 === Value2) {
-        commonOutput.push(`${key}: ${Value1}`)
-      } else {
-        commonOutput.push(`- ${key}: ${Value1}`);
-        commonOutput.push(`+ ${key}: ${Value2}`);
+  const calcDiff = (firstObj, secondObj) => {
+    const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)]);
+    return uniqueKeys.reduce((acc, key) => {
+      const hasKey1 = Object.hasOwn(firstObj, key);
+      const hasKey2 = Object.hasOwn(secondObj, key);
+      const value1 = firstObj?.[key];
+      const value2 = secondObj?.[key];
+      if (hasKey1 === hasKey2) {
+        if (_.isObject(value1) && _.isObject(value2)) {
+          return { ...acc, [key]: { type: 'object', value: calcDiff(value1, value2) } };
+        }
+        if (value1 === value2) {
+          return { ...acc, [key]: { type: 'equal', value: value1 }};
+        }
+        return { ...acc, [key]: { type: 'common', file1: value1, file2: value2 }};
+      } 
+      if (hasKey1) { 
+        return { ...acc, [key]: { type: 'firstFile', file1: value1 }}
+      } 
+      if (hasKey2) {
+        return { ...acc, [key]: { type: 'secondFile', file2: value2 }}
       }
-    } else if (hasKey1) {
-      firstFileOutput.push(`- ${key}: ${Value1}`);
-    } else if (hasKey2) {
-      secondFileOutput.push(`+ ${key}: ${Value2}`);
-    }
-    return acc;
-  }, [[], [], []])
-  .flat();
-  return `{\n  ${result.join('\n  ')} \n}`;
-};
+      return acc;
+    }, {});
+  };
+  const diffTree = calcDiff(parsedFile1, parsedFile2);
+  switch (format) {
+    case 'stylish': return stylishFormat(diffTree);
+    default: Error(`Invalid format output: ${format}`);
+  }
+}
 
 export default genDiff;
