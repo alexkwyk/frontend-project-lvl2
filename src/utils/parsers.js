@@ -1,4 +1,4 @@
-import readFile from './utils.js';
+import readFile from './readFile.js';
 import * as path from 'node:path';
 import yaml from 'js-yaml';
 

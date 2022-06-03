@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import stylishFormat from './src/formatters.js';
-import parse from './src/parsers.js'
+import formatDiff from './src/formatters/index.js';
+import parse from './src/utils/parsers.js'
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const parsedFile1 = parse(filepath1);
@@ -32,10 +32,7 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
     }, {});
   };
   const diffTree = calcDiff(parsedFile1, parsedFile2);
-  switch (format) {
-    case 'stylish': return stylishFormat(diffTree);
-    default: return `Invalid format output: "${format}"\nAvailable output options:\n  stylish`;
-  }
+  return formatDiff(diffTree, format);
 }
 
 export default genDiff;
