@@ -7,4 +7,9 @@
 ## Example
 
 ### Stylish format:
-[![asciicast](https://asciinema.org/a/499382.svg)](https://asciinema.org/a/499382)
+[![asciicast](https://asciinema.org/a/499729.svg)](https://asciinema.org/a/499729)
+### Plain format:
+[![asciicast](https://asciinema.org/a/499730.svg)](https://asciinema.org/a/499730)
+### JSON format:
+[![asciicast](https://asciinema.org/a/499731.svg)](https://asciinema.org/a/499731)
+
