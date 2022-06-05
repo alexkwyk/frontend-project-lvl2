@@ -5,40 +5,39 @@ const getValue = (item, depth) => (_.isObject(item)) ? stringify(item, depth + 1
 
 const stylish = (differenceTree) => {
   const iter = (currentData, depth, parent) => {
-    const { type } = currentData;
     const indent = '  '.repeat(2 * depth);
     const lowerIndent = '  '.repeat(2 * depth - 1);
-    if (type === 'object') {
-      const { children } = currentData;
-      const currentEntries = Object.entries(children);
-      const dataString = currentEntries.map(([key, value]) => {
-        return `${iter(value, depth + 1, key)}`;
-      });
-      const result = `${dataString.join('\n')}`;
-      return `${indent}${parent}: {\n${result}\n${indent}}`;
-    } 
-    else if (type === 'equal') {
-      const { value } = currentData;
-      return `${indent}${parent}: ${value}`
-    } 
-    else if (type === 'common') {
-      const { file1, file2 } = currentData;
-      const firstValue = getValue(file1, depth);
-      const secondValue = getValue(file2, depth);
-      return `${lowerIndent}- ${parent}: ${firstValue}\n${lowerIndent}+ ${parent}: ${secondValue}`;
-    } 
-    else if (type === 'firstFile') {
-      const { file1 } = currentData;
-      const firstValue = getValue(file1, depth);
-      return `${lowerIndent}- ${parent}: ${firstValue}`
-    } 
-    else if (type === 'secondFile') {
-      const { file2 } = currentData;
-      const secondValue = getValue(file2, depth);
-      return `${lowerIndent}+ ${parent}: ${secondValue}`
+    switch (currentData.type) {
+      case 'object': {
+        const { children } = currentData;
+        const result = Object.entries(children)
+          .map(([key, value]) => `${iter(value, depth + 1, key)}`)
+          .join('\n');
+        return `${indent}${parent}: {\n${result}\n${indent}}`;
+      } 
+      case 'equal': {
+        const { value } = currentData;
+        return `${indent}${parent}: ${value}`
+      } 
+      case 'common': {
+        const { file1, file2 } = currentData;
+        return `${lowerIndent}- ${parent}: ${getValue(file1, depth)}\n${lowerIndent}+ ${parent}: ${getValue(file2, depth)}`;
+      } 
+      case 'firstFile': {
+        const { file1 } = currentData;
+        return `${lowerIndent}- ${parent}: ${getValue(file1, depth)}`
+      } 
+      case 'secondFile': {
+        const { file2 } = currentData;
+        return `${lowerIndent}+ ${parent}: ${getValue(file2, depth)}`
+      }
+      default: {
+        const formatedData = Object.entries(currentData)
+          .map(([key, val]) => iter(val, 1, key))
+          .join('\n');
+        return `{\n${formatedData}\n}`;
+      }
     }
-    const formatedData = Object.entries(currentData).map(([key, val]) => iter(val, 1, key)).join('\n');
-    return `{\n${formatedData}\n}`;
   };
   return iter(differenceTree);
 }

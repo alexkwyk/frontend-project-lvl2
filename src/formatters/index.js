@@ -7,6 +7,6 @@ export default (data, format) => {
     case 'stylish': return stylish(data);
     case 'plain': return plain(data);
     case 'json': return jsonFormat(data);
-    default: return `Invalid format output: "${format}"\nAvailable output options:\n  stylish`;
+    default: return `Invalid format output: "${format}"\nAvailable output options:\n  stylish\n  plain\n  json`;
   }
 }
