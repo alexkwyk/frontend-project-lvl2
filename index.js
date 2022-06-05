@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import formatDiff from './src/formatters/index.js';
-import parse from './src/utils/parsers.js'
+import parse from './src/utilities/parsers.js'
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const parsedFile1 = parse(filepath1);
   const parsedFile2 = parse(filepath2);
 
   const calcDiff = (firstObj, secondObj) => {
-    const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)]);
+    const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)])
+    .sort();
     return uniqueKeys.reduce((acc, key) => {
       const hasKey1 = Object.hasOwn(firstObj, key);
       const hasKey2 = Object.hasOwn(secondObj, key);
