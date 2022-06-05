@@ -8,10 +8,10 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
 
   const calcDiff = (firstObj, secondObj) => {
     const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)])
-    .sort();
+      .sort();
     return uniqueKeys.reduce((acc, key) => {
-      const hasKey1 = Object.hasOwn(firstObj, key);
-      const hasKey2 = Object.hasOwn(secondObj, key);
+      const hasKey1 = _.has(firstObj, key);
+      const hasKey2 = _.has(secondObj, key);
       const value1 = firstObj?.[key];
       const value2 = secondObj?.[key];
       if (hasKey1 === hasKey2) {
