@@ -1,9 +1,9 @@
-import _ from 'lodash'
+import _ from 'lodash';
 
 const getValue = (item) => {
   if (_.isObject(item)) return '[complex value]';
   return (typeof item === 'string') ? `'${item}'` : item;
-}
+};
 
 const plain = (differenceTree) => {
   const iter = (currentData, path) => {
@@ -12,21 +12,21 @@ const plain = (differenceTree) => {
         .reduce((acc, [key, value]) => {
           const currentPath = `${path}.${key}`;
           const currentOutput = iter(value, currentPath);
-          if (currentOutput !== undefined) { 
+          if (currentOutput !== undefined) {
             acc.push(currentOutput);
           }
           return acc;
         }, [])
         .join('\n');
-      case 'equal': return;
+      case 'equal': return undefined;
       case 'common': {
         const { file1, file2 } = currentData;
         return `Property '${path}' was updated. From ${getValue(file1)} to ${getValue(file2)}`;
-      } 
-      case 'firstFile': return `Property '${path}' was removed`
+      }
+      case 'firstFile': return `Property '${path}' was removed`;
       case 'secondFile': {
         const { file2 } = currentData;
-        return `Property '${path}' was added with value: ${getValue(file2)}`
+        return `Property '${path}' was added with value: ${getValue(file2)}`;
       }
       default: return Object.entries(currentData)
         .map(([key, val]) => iter(val, key))
@@ -35,8 +35,7 @@ const plain = (differenceTree) => {
     }
   };
 
-
-  return iter(differenceTree)
-}
+  return iter(differenceTree);
+};
 
 export default plain;

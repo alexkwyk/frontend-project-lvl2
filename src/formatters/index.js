@@ -1,6 +1,6 @@
 import plain from './plain.js';
 import stylish from './stylish.js';
-import jsonFormat from './json.js'
+import jsonFormat from './json.js';
 
 export default (data, format) => {
   switch (format) {
@@ -9,4 +9,4 @@ export default (data, format) => {
     case 'json': return jsonFormat(data);
     default: return `Invalid format output: "${format}"\nAvailable output options:\n  stylish\n  plain\n  json`;
   }
-}
+};
