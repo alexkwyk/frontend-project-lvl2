@@ -33,3 +33,15 @@ test('plain format', () => {
   expect(genDiff(file1json, file2yml, 'plain')).toBe(expected);
   expect(genDiff(file1yml, file2json, 'plain')).toBe(expected);
 });
+
+test('json format', () => {
+  const file1json = getFilePath('file1.json');
+  const file2json = getFilePath('file2.json');
+  const file1yml = getFilePath('file1.yml');
+  const file2yml = getFilePath('file2.yml');
+  const expected = readFile(getFilePath('exceptedJson.txt'));
+  expect(genDiff(file1json, file2json, 'json')).toBe(expected);
+  expect(genDiff(file1yml, file2yml, 'json')).toBe(expected);
+  expect(genDiff(file1json, file2yml, 'json')).toBe(expected);
+  expect(genDiff(file1yml, file2json, 'json')).toBe(expected);
+});

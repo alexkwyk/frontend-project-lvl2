@@ -16,7 +16,7 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
       const value2 = secondObj?.[key];
       if (hasKey1 === hasKey2) {
         if (_.isObject(value1) && _.isObject(value2)) {
-          return { ...acc, [key]: { type: 'object', value: calcDiff(value1, value2) } };
+          return { ...acc, [key]: { type: 'object', children: calcDiff(value1, value2) } };
         }
         if (value1 === value2) {
           return { ...acc, [key]: { type: 'equal', value: value1 }};

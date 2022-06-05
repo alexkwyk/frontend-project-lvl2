@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const stringify = (values, baseDepth, replacer = '  ', spacesCount = 2) => {
+const stringify = (values, baseDepth = 1, replacer = '  ', spacesCount = 2) => {
   const iter = (data, depth) => {
     if (_.isObject(data)) {
       const dataEntries = Object.entries(data);
@@ -16,7 +16,7 @@ const stringify = (values, baseDepth, replacer = '  ', spacesCount = 2) => {
       const result = `${dataString.join('\n')}`;
       return `{\n${result}\n${lowerSpace}}`;
     }
-    return data.toString();
+    return (data === null)? null : data.toString();
   };
   return iter(values, baseDepth);
 };

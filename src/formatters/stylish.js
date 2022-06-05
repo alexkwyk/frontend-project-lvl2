@@ -9,8 +9,8 @@ const stylish = (differenceTree) => {
     const indent = '  '.repeat(2 * depth);
     const lowerIndent = '  '.repeat(2 * depth - 1);
     if (type === 'object') {
-      const { value } = currentData;
-      const currentEntries = Object.entries(value);
+      const { children } = currentData;
+      const currentEntries = Object.entries(children);
       const dataString = currentEntries.map(([key, value]) => {
         return `${iter(value, depth + 1, key)}`;
       });

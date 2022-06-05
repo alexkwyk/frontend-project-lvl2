@@ -9,10 +9,9 @@ const plain = (differenceTree) => {
   const iter = (currentData, path) => {
     const { type } = currentData;
     if (type === 'object') {
-      const { value } = currentData;
-      const currentEntries = Object.entries(value);
-      const dataArray = currentEntries.reduce((acc, item) => {
-        const [key, value] = item;
+      const { children } = currentData;
+      const currentEntries = Object.entries(children);
+      const dataArray = currentEntries.reduce((acc, [key, value]) => {
         const currentPath = `${path}.${key}`;
         const currentOutput = iter(value, currentPath);
         if (currentOutput !== undefined) { 
