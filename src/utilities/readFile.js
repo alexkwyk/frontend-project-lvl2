@@ -1,6 +1,6 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
-import * as process from 'node:process';
+import fs from 'fs';
+import path from 'path';
+import process from 'process';
 
 const readFile = (filepath) => fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf-8');
 

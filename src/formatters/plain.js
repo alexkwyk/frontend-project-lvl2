@@ -13,7 +13,7 @@ const plain = (differenceTree) => {
           const currentPath = `${path}.${key}`;
           const currentOutput = iter(value, currentPath);
           if (currentOutput !== undefined) {
-            acc.push(currentOutput);
+            return [...acc, currentOutput];
           }
           return acc;
         }, [])

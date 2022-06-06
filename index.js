@@ -7,9 +7,9 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const parsedFile2 = parse(filepath2);
 
   const calcDiff = (firstObj, secondObj) => {
-    const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)])
-      .sort();
-    return uniqueKeys.reduce((acc, key) => {
+    const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)]);
+    const sortedKeys = _.sortBy(uniqueKeys);
+    return sortedKeys.reduce((acc, key) => {
       const hasKey1 = _.has(firstObj, key);
       const hasKey2 = _.has(secondObj, key);
       const value1 = firstObj?.[key];
