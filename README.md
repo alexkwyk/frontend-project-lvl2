@@ -5,6 +5,10 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/8cb6299162b5b04663ba/test_coverage)](https://codeclimate.com/github/alexkwyk/frontend-project-lvl2/test_coverage)
 # Difference generator
 Compares JSON or YAML files and shows the difference in the three output formats.
+## Installation
+Make sure you have Node.js(14+) and NPM.
+1. Clone this repository: `git@github.com:alexkwyk/frontend-project-lvl2.git`
+2. Install: `make install`
 ## Usage:
 ```
 gendiff [options] <filepath1> <filepath2>
@@ -190,10 +194,10 @@ Property 'group3' was added with value: [complex value]
 
 ## Example
 
-### Stylish format:
+### Stylish:
 [![asciicast](https://asciinema.org/a/499729.svg)](https://asciinema.org/a/499729)
-### Plain format:
+### Plain:
 [![asciicast](https://asciinema.org/a/499730.svg)](https://asciinema.org/a/499730)
-### JSON format:
+### JSON:
 [![asciicast](https://asciinema.org/a/499731.svg)](https://asciinema.org/a/499731)
 
