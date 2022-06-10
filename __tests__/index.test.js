@@ -47,3 +47,9 @@ test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
   const filepath2 = getFilePath(file2);
   expect(genDiff(filepath1, filepath2, 'stylish')).toMatch('Unsupported file format');
 });
+
+test.each(fixtures)('wrong choose format type: %s, %s', (file1, file2) => {
+  const filepath1 = getFilePath(file1);
+  const filepath2 = getFilePath(file2);
+  expect(genDiff(filepath1, filepath2, 'stylis')).toMatch('Invalid format output');
+});
