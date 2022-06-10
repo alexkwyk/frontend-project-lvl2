@@ -21,13 +21,12 @@
   },
   "homepage": "https://github.com/alexkwyk/frontend-project-lvl2#readme",
   "dependencies": {
-    "@jest/globals": "^28.1.0",
     "commander": "^9.2.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "eslint": "^8.16.0",
+    "eslint": "^8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.4.6",
