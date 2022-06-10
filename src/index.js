@@ -4,14 +4,14 @@ import formatDiff from './formatters/index.js';
 import parse from './utilities/parsers.js';
 import readFile from './utilities/readFile.js';
 
-const buildDiff = (firstObj, secondObj) => {
-  const uniqueKeys = _.uniq([...Object.keys(firstObj), ...Object.keys(secondObj)]);
-  const sortedKeys = _.sortBy(uniqueKeys);
+const buildDiff = (data1, data2) => {
+  const keys = _.union(_.keys(data1), _.keys(data2));
+  const sortedKeys = _.sortBy(keys);
   return sortedKeys.reduce((acc, key) => {
-    const hasKey1 = _.has(firstObj, key);
-    const hasKey2 = _.has(secondObj, key);
-    const value1 = firstObj?.[key];
-    const value2 = secondObj?.[key];
+    const hasKey1 = _.has(data1, key);
+    const hasKey2 = _.has(data2, key);
+    const value1 = data1?.[key];
+    const value2 = data2?.[key];
     if (hasKey1 === hasKey2) {
       if (_.isObject(value1) && _.isObject(value2)) {
         return { ...acc, [key]: { type: 'object', children: buildDiff(value1, value2) } };
