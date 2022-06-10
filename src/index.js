@@ -34,8 +34,13 @@ const buildDiffTree = (data1, data2) => {
 const getExtName = (filepath) => path.extname(path.basename(filepath)).slice(1);
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
-  const parsedFile1 = parse(readFile(filepath1), getExtName(filepath1));
-  const parsedFile2 = parse(readFile(filepath2), getExtName(filepath2));
+  const extension1 = getExtName(filepath1);
+  const extension2 = getExtName(filepath2);
+  const formats = ['json', 'yml', 'yaml'];
+  if (!formats.includes(extension1)) return `Unsupported file format: ${extension1}`;
+  if (!formats.includes(extension2)) return `Unsupported file format: ${extension2}`;
+  const parsedFile1 = parse(readFile(filepath1), extension1);
+  const parsedFile2 = parse(readFile(filepath2), extension2);
   const diffTree = buildDiffTree(parsedFile1, parsedFile2);
   return formatDiff(diffTree, format);
 };

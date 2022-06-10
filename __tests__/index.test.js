@@ -15,6 +15,12 @@ const fixtures = [
   ['file1.yml', 'file2.yml'],
 ];
 
+const wrongFixtures = [
+  ['exceptedStylish.txt', 'file2.json'],
+  ['file1.yml', 'exceptedStylish.txt'],
+  ['file1.json', 'exceptedJson.txt'],
+  ['exceptedPlain.txt', 'file2.yml'],
+];
 test.each(fixtures)('stylish: %s, %s', (file1, file2) => {
   const filepath1 = getFilePath(file1);
   const filepath2 = getFilePath(file2);
@@ -34,4 +40,10 @@ test.each(fixtures)('json: %s, %s', (file1, file2) => {
   const filepath2 = getFilePath(file2);
   const expected = readFile(getFilePath('exceptedJson.txt'));
   expect(genDiff(filepath1, filepath2, 'json')).toBe(expected);
+});
+
+test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
+  const filepath1 = getFilePath(file1);
+  const filepath2 = getFilePath(file2);
+  expect(genDiff(filepath1, filepath2, 'stylish')).toMatch('Unsupported file format');
 });
