@@ -21,35 +21,46 @@ const wrongFixtures = [
   ['file1.json', 'exceptedJson.txt'],
   ['exceptedPlain.txt', 'file2.yml'],
 ];
-test.each(fixtures)('stylish: %s, %s', (file1, file2) => {
-  const filepath1 = getFilePath(file1);
-  const filepath2 = getFilePath(file2);
-  const expected = readFile(getFilePath('exceptedStylish.txt'));
-  expect(genDiff(filepath1, filepath2)).toBe(expected);
+
+describe('stylish', () => {
+  test.each(fixtures)('stylish: %s, %s', (file1, file2) => {
+    const filepath1 = getFilePath(file1);
+    const filepath2 = getFilePath(file2);
+    const expected = readFile(getFilePath('exceptedStylish.txt'));
+    expect(genDiff(filepath1, filepath2)).toBe(expected);
+  });
 });
 
-test.each(fixtures)('plain: %s, %s', (file1, file2) => {
-  const filepath1 = getFilePath(file1);
-  const filepath2 = getFilePath(file2);
-  const expected = readFile(getFilePath('exceptedPlain.txt'));
-  expect(genDiff(filepath1, filepath2, 'plain')).toBe(expected);
+describe('plain', () => {
+  test.each(fixtures)('plain: %s, %s', (file1, file2) => {
+    const filepath1 = getFilePath(file1);
+    const filepath2 = getFilePath(file2);
+    const expected = readFile(getFilePath('exceptedPlain.txt'));
+    expect(genDiff(filepath1, filepath2, 'plain')).toBe(expected);
+  });
 });
 
-test.each(fixtures)('json: %s, %s', (file1, file2) => {
-  const filepath1 = getFilePath(file1);
-  const filepath2 = getFilePath(file2);
-  const expected = readFile(getFilePath('exceptedJson.txt'));
-  expect(genDiff(filepath1, filepath2, 'json')).toBe(expected);
+describe('json', () => {
+  test.each(fixtures)('json: %s, %s', (file1, file2) => {
+    const filepath1 = getFilePath(file1);
+    const filepath2 = getFilePath(file2);
+    const expected = readFile(getFilePath('exceptedJson.txt'));
+    expect(genDiff(filepath1, filepath2, 'json')).toBe(expected);
+  });
 });
 
-test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
-  const filepath1 = getFilePath(file1);
-  const filepath2 = getFilePath(file2);
-  expect(genDiff(filepath1, filepath2, 'stylish')).toMatch('Unsupported file format');
+describe('wrong file formats', () => {
+  test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
+    const filepath1 = getFilePath(file1);
+    const filepath2 = getFilePath(file2);
+    expect(genDiff(filepath1, filepath2, 'stylish')).toMatch('Unsupported file format');
+  });
 });
 
-test.each(fixtures)('wrong choose format type: %s, %s', (file1, file2) => {
-  const filepath1 = getFilePath(file1);
-  const filepath2 = getFilePath(file2);
-  expect(genDiff(filepath1, filepath2, 'stylis')).toMatch('Invalid format output');
+describe('wrong choose format type', () => {
+  test.each(fixtures)('wrong choose format type: %s, %s', (file1, file2) => {
+    const filepath1 = getFilePath(file1);
+    const filepath2 = getFilePath(file2);
+    expect(genDiff(filepath1, filepath2, 'stylis')).toMatch('Invalid format output');
+  });
 });
