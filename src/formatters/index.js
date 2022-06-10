@@ -5,7 +5,7 @@ export default (data, format) => {
   switch (format) {
     case 'stylish': return stylish(data);
     case 'plain': return plain(data);
-    case 'json': return JSON.stringify(data, '  ', 2);
+    case 'json': return JSON.stringify(data);
     default: return `Invalid format output: "${format}"\nAvailable output options:\n  stylish\n  plain\n  json`;
   }
 };
