@@ -22,32 +22,32 @@ const stringify = (values, baseDepth = 1, replacer = '  ', spacesCount = 2) => {
 
 const getValue = (item, depth) => ((_.isObject(item)) ? stringify(item, depth + 1) : item);
 
-const makeOutput = (node, parent, depth = 1) => {
+const makeOutput = (node, depth = 1) => {
   const indent = '  '.repeat(2 * depth);
   const lowerIndent = '  '.repeat(2 * depth - 1);
   switch (node.type) {
-    case 'object': {
-      const newChildren = Object.entries(node.children)
-        .map(([key, value]) => makeOutput(value, key, depth + 1))
+    case 'nested': {
+      const newChildren = node.children
+        .map((item) => makeOutput(item, depth + 1))
         .join('\n');
-      return `${indent}${parent}: {\n${newChildren}\n${indent}}`;
+      return `${indent}${node.key}: {\n${newChildren}\n${indent}}`;
     }
-    case 'equal':
-      return `${indent}${parent}: ${node.value}`;
-    case 'common':
-      return `${lowerIndent}- ${parent}: ${getValue(node.file1, depth)}\n${lowerIndent}+ ${parent}: ${getValue(node.file2, depth)}`;
-    case 'firstFile':
-      return `${lowerIndent}- ${parent}: ${getValue(node.file1, depth)}`;
-    case 'secondFile':
-      return `${lowerIndent}+ ${parent}: ${getValue(node.file2, depth)}`;
+    case 'unchanged':
+      return `${indent}${node.key}: ${node.value}`;
+    case 'changed':
+      return `${lowerIndent}- ${node.key}: ${getValue(node.removedValue, depth)}\n${lowerIndent}+ ${node.key}: ${getValue(node.addedValue, depth)}`;
+    case 'removed':
+      return `${lowerIndent}- ${node.key}: ${getValue(node.value, depth)}`;
+    case 'added':
+      return `${lowerIndent}+ ${node.key}: ${getValue(node.value, depth)}`;
     default:
-      return Error(`Invalid type: ${node.type} of key: ${parent} in unformated difference tree`);
+      return Error(`Invalid type: ${node.type} of key: ${node.key} in unformated difference tree`);
   }
 };
 
 const stylish = (differenceTree) => {
-  const result = Object.entries(differenceTree)
-    .map(([key, val]) => makeOutput(val, key))
+  const result = differenceTree
+    .map((item) => makeOutput(item))
     .join('\n');
   return `{\n${result}\n}`;
 };
