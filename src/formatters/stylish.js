@@ -34,7 +34,7 @@ const makeOutput = (node, depth = 1) => {
     }
     case 'unchanged':
       return `${indent}${node.key}: ${node.value}`;
-    case 'changed':
+    case 'updated':
       return `${lowerIndent}- ${node.key}: ${getValue(node.removedValue, depth)}\n${lowerIndent}+ ${node.key}: ${getValue(node.addedValue, depth)}`;
     case 'removed':
       return `${lowerIndent}- ${node.key}: ${getValue(node.value, depth)}`;

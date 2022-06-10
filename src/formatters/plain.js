@@ -18,7 +18,7 @@ const makeOutput = (node, path) => {
       .join('\n');
     case 'unchanged':
       return null;
-    case 'changed':
+    case 'updated':
       return `Property '${path}' was updated. From ${stringify(node.removedValue)} to ${stringify(node.addedValue)}`;
     case 'removed':
       return `Property '${path}' was removed`;
