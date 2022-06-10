@@ -31,7 +31,7 @@ const buildDiff = (data1, data2) => {
   }, {});
 };
 
-const getExtName = (filepath) => path.extname(path.basename(filepath));
+const getExtName = (filepath) => path.extname(path.basename(filepath)).slice(1);
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const parsedFile1 = parse(readFile(filepath1), getExtName(filepath1));
