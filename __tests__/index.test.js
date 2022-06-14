@@ -53,7 +53,7 @@ describe('wrong file formats', () => {
   test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
     const filepath1 = getFilePath(file1);
     const filepath2 = getFilePath(file2);
-    expect(genDiff(filepath1, filepath2, 'stylish')).toMatch('Unsupported file format');
+    expect(() => genDiff(filepath1, filepath2, 'stylish')).toThrow();
   });
 });
 
@@ -61,6 +61,6 @@ describe('wrong choose format type', () => {
   test.each(fixtures)('wrong choose format type: %s, %s', (file1, file2) => {
     const filepath1 = getFilePath(file1);
     const filepath2 = getFilePath(file2);
-    expect(genDiff(filepath1, filepath2, 'stylis')).toMatch('Invalid format output');
+    expect(() => genDiff(filepath1, filepath2, 'stylis')).toThrow();
   });
 });
