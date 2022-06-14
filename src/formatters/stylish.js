@@ -27,14 +27,14 @@ const makeOutput = (node, depth = 1) => {
         .join('\n');
       return `${indent}${node.key}: {\n${newChildren}\n${indent}}`;
     }
-    case 'unchanged':
-      return `${indent}${node.key}: ${node.value}`;
     case 'changed':
       return `${lowerIndent}- ${node.key}: ${stringify(node.removedValue, depth + 1)}\n${lowerIndent}+ ${node.key}: ${stringify(node.addedValue, depth + 1)}`;
     case 'removed':
       return `${lowerIndent}- ${node.key}: ${stringify(node.value, depth + 1)}`;
-    default:
+    case 'added':
       return `${lowerIndent}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
+    default:
+      return `${indent}${node.key}: ${node.value}`;
   }
 };
 
