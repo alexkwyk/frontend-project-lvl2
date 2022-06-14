@@ -9,10 +9,18 @@ const __dirname = dirname(__filename);
 const getFilePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
 const fixtures = [
-  ['file1.json', 'file2.json'],
-  ['file1.yml', 'file2.yml'],
-  ['file1.json', 'file2.yml'],
-  ['file1.yml', 'file2.yml'],
+  ['file1.json', 'file2.json', 'stylish'],
+  ['file1.yml', 'file2.yml', 'stylish'],
+  ['file1.json', 'file2.yml', 'stylish'],
+  ['file1.yml', 'file2.yml', 'stylish'],
+  ['file1.json', 'file2.json', 'plain'],
+  ['file1.yml', 'file2.yml', 'plain'],
+  ['file1.json', 'file2.yml', 'plain'],
+  ['file1.yml', 'file2.yml', 'plain'],
+  ['file1.json', 'file2.json', 'plain'],
+  ['file1.yml', 'file2.yml', 'plain'],
+  ['file1.json', 'file2.yml', 'plain'],
+  ['file1.yml', 'file2.yml', 'plain'],
 ];
 
 const wrongFixtures = [
@@ -22,42 +30,20 @@ const wrongFixtures = [
   ['exceptedPlain.txt', 'file2.yml'],
 ];
 
-describe('stylish', () => {
-  test.each(fixtures)('stylish: %s, %s', (file1, file2) => {
+describe('positive tests', () => {
+  test.each(fixtures)('files: %s %s, format: %s', (file1, file2, format) => {
     const filepath1 = getFilePath(file1);
     const filepath2 = getFilePath(file2);
-    const expected = readFile(getFilePath('exceptedStylish.txt'));
-    expect(genDiff(filepath1, filepath2)).toBe(expected);
+    expect(genDiff(filepath1, filepath2, format)).toBe(readFile(getFilePath(`${format}.txt`)));
   });
 });
 
-describe('plain', () => {
-  test.each(fixtures)('plain: %s, %s', (file1, file2) => {
-    const filepath1 = getFilePath(file1);
-    const filepath2 = getFilePath(file2);
-    const expected = readFile(getFilePath('exceptedPlain.txt'));
-    expect(genDiff(filepath1, filepath2, 'plain')).toBe(expected);
-  });
-});
-
-describe('json', () => {
-  test.each(fixtures)('json: %s, %s', (file1, file2) => {
-    const filepath1 = getFilePath(file1);
-    const filepath2 = getFilePath(file2);
-    const expected = readFile(getFilePath('exceptedJson.txt'));
-    expect(genDiff(filepath1, filepath2, 'json')).toBe(expected);
-  });
-});
-
-describe('wrong file formats', () => {
+describe('negative tests', () => {
   test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
     const filepath1 = getFilePath(file1);
     const filepath2 = getFilePath(file2);
     expect(() => genDiff(filepath1, filepath2, 'stylish')).toThrow();
   });
-});
-
-describe('wrong choose format type', () => {
   test.each(fixtures)('wrong choose format type: %s, %s', (file1, file2) => {
     const filepath1 = getFilePath(file1);
     const filepath2 = getFilePath(file2);
