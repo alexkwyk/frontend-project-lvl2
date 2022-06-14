@@ -23,30 +23,24 @@ const fixtures = [
   ['file1.yml', 'file2.yml', 'json'],
 ];
 
-const wrongFixtures = [
-  ['exceptedStylish.txt', 'file2.json'],
-  ['file1.yml', 'exceptedStylish.txt'],
-  ['file1.json', 'exceptedJson.txt'],
-  ['exceptedPlain.txt', 'file2.yml'],
-];
-
 describe('positive tests', () => {
-  test.each(fixtures)('files: %s %s, format: %s', (file1, file2, format) => {
+  test.each(fixtures)('Files: %s, %s. Output format: %s', (file1, file2, format) => {
     const filepath1 = getFilePath(file1);
     const filepath2 = getFilePath(file2);
-    expect(genDiff(filepath1, filepath2, format)).toBe(readFile(getFilePath(`${format}.txt`)));
+    const excepted = readFile(getFilePath(`${format}.txt`));
+    expect(genDiff(filepath1, filepath2, format)).toBe(excepted);
   });
 });
 
 describe('negative tests', () => {
-  test.each(wrongFixtures)('wrong file formats: %s, %s', (file1, file2) => {
-    const filepath1 = getFilePath(file1);
-    const filepath2 = getFilePath(file2);
+  test('wrong file format', () => {
+    const filepath1 = getFilePath('exceptedStylish.txt');
+    const filepath2 = getFilePath('file2.json');
     expect(() => genDiff(filepath1, filepath2, 'stylish')).toThrow();
   });
-  test.each(fixtures)('wrong choose format type: %s, %s', (file1, file2) => {
-    const filepath1 = getFilePath(file1);
-    const filepath2 = getFilePath(file2);
-    expect(() => genDiff(filepath1, filepath2, 'stylis')).toThrow();
+  test('wrong output format', () => {
+    const filepath1 = getFilePath('file1.json');
+    const filepath2 = getFilePath('file2.json');
+    expect(() => genDiff(filepath1, filepath2, 'null')).toThrow();
   });
 });
