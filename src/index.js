@@ -6,7 +6,7 @@ import readFile from './utilities/readFile.js';
 
 const getExtName = (filepath) => path.extname(path.basename(filepath)).slice(1);
 
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
+const genDiff = (filepath1, filepath2, format) => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
   const extension1 = getExtName(filepath1);

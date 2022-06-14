@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
-const stringify = (values, baseDepth = 1, replacer = '  ', spacesCount = 2) => {
+const stringify = (values, baseDepth) => {
   const iter = (data, depth) => {
     if (_.isObject(data)) {
-      const space = replacer.repeat(spacesCount * depth);
-      const lowerSpace = replacer.repeat(spacesCount * (depth - 1));
+      const space = '  '.repeat(2 * depth);
+      const lowerSpace = '  '.repeat(2 * (depth - 1));
       const result = Object.entries(data)
         .map(([key, value]) => {
           if (typeof value === 'object') {
@@ -36,10 +36,8 @@ const makeOutput = (node, depth = 1) => {
       return `${lowerIndent}- ${node.key}: ${stringify(node.removedValue, depth + 1)}\n${lowerIndent}+ ${node.key}: ${stringify(node.addedValue, depth + 1)}`;
     case 'removed':
       return `${lowerIndent}- ${node.key}: ${stringify(node.value, depth + 1)}`;
-    case 'added':
-      return `${lowerIndent}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
     default:
-      return Error(`Invalid type: ${node.type} of key: ${node.key} in unformated difference tree`);
+      return `${lowerIndent}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
   }
 };
 

@@ -22,10 +22,8 @@ const makeOutput = (node, path) => {
       return `Property '${path}' was updated. From ${stringify(node.removedValue)} to ${stringify(node.addedValue)}`;
     case 'removed':
       return `Property '${path}' was removed`;
-    case 'added':
-      return `Property '${path}' was added with value: ${stringify(node.value)}`;
     default:
-      return Error(`Invalid type: ${node.type} of key: ${path} in unformated difference tree`);
+      return `Property '${path}' was added with value: ${stringify(node.value)}`;
   }
 };
 
