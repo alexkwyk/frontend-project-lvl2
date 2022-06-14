@@ -34,9 +34,9 @@ describe('positive tests', () => {
 
 describe('negative tests', () => {
   test('wrong file format', () => {
-    const filepath1 = getFilePath('exceptedStylish.txt');
+    const filepath1 = getFilePath('stylish.txt');
     const filepath2 = getFilePath('file2.json');
-    expect(() => genDiff(filepath1, filepath2, 'stylish')).toThrow();
+    expect(() => genDiff(filepath1, filepath2)).toThrow();
   });
   test('wrong output format', () => {
     const filepath1 = getFilePath('file1.json');
