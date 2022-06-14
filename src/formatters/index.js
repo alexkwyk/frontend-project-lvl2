@@ -6,6 +6,6 @@ export default (data, format) => {
     case 'stylish': return stylish(data);
     case 'plain': return plain(data);
     case 'json': return JSON.stringify(data);
-    default: throw Error(`Invalid format output: "${format}". Available output options: stylish, plain, json.`);
+    default: throw Error(`Invalid output format: "${format}". Available output options: stylish, plain, json`);
   }
 };
