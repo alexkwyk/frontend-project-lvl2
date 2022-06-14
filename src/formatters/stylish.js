@@ -5,7 +5,7 @@ const stringify = (data, depth) => {
     const space = '  '.repeat(2 * depth);
     const lowerSpace = '  '.repeat(2 * (depth - 1));
     const result = Object.entries(data)
-      .map(([key, value]) => (_.isObject(value) ? `${space}${key}: ${stringify(value, depth + 1)}` : `${space}${key}: ${value}`))
+      .map(([key, value]) => `${space}${key}: ${stringify(value, depth + 1)}`)
       .join('\n');
     return `{\n${result}\n${lowerSpace}}`;
   }
