@@ -1,23 +1,20 @@
 import _ from 'lodash';
 
-const stringify = (values, baseDepth) => {
-  const iter = (data, depth) => {
-    if (_.isObject(data)) {
-      const space = '  '.repeat(2 * depth);
-      const lowerSpace = '  '.repeat(2 * (depth - 1));
-      const result = Object.entries(data)
-        .map(([key, value]) => {
-          if (typeof value === 'object') {
-            return `${space}${key}: ${iter(value, depth + 1)}`;
-          }
-          return `${space}${key}: ${value}`;
-        })
-        .join('\n');
-      return `{\n${result}\n${lowerSpace}}`;
-    }
-    return (data === null) ? null : data.toString();
-  };
-  return iter(values, baseDepth);
+const stringify = (data, depth) => {
+  if (_.isObject(data)) {
+    const space = '  '.repeat(2 * depth);
+    const lowerSpace = '  '.repeat(2 * (depth - 1));
+    const result = Object.entries(data)
+      .map(([key, value]) => {
+        if (typeof value === 'object') {
+          return `${space}${key}: ${stringify(value, depth + 1)}`;
+        }
+        return `${space}${key}: ${value}`;
+      })
+      .join('\n');
+    return `{\n${result}\n${lowerSpace}}`;
+  }
+  return (data === null) ? null : data.toString();
 };
 
 const makeOutput = (node, depth = 1) => {
